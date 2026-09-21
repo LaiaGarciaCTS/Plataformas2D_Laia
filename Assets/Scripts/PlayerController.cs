@@ -15,6 +15,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float _sensorSize = 1;
     [SerializeField]private LayerMask _groundLayer;
     [SerializeField]private Transform _groundSensor;
+
+    private Animator _animator;
+
+    private InputAction _attackAction;
+    [SerializeField]private int _attackDamage;
+    [SerializeField]private Transform _attackHitBox;
+    [SerializeField]private float _hitBoxRadius = 0.7f;
   
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,6 +32,10 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions["Move"];
 
         _jumpAction = InputSystem.actions["Jump"];
+
+        _animator = GetComponent<Animator>();
+
+        _attackAction = InputSystem.actions["Attack"];
     }
 
     void Start()
@@ -40,16 +51,30 @@ public class PlayerController : MonoBehaviour
         if(_moveInput.x < 0)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
+            _animator.SetBool("IsRunning", true);
         }
         else if(_moveInput.x > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            _animator.SetBool("IsRunning", true);
+        }
+
+        else
+        {
+            _animator.SetBool("IsRunning", false);
         }
 
         if(_jumpAction.WasPressedThisFrame() && IsGrounded())
         {
             Jump();
         }
+
+        if(_attackAction.WasPressedThisFrame() && IsGrounded())
+        {
+            Attack();
+        }
+
+        _animator.SetBool("IsJumping", !IsGrounded());
     }
 
     void FixedUpdate()
@@ -62,6 +87,22 @@ public class PlayerController : MonoBehaviour
         _rigidbody2D.AddForce(Vector2.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
     }
     
+    void Attack()
+    {
+        _animator.SetTrigger("IsAttack");
+
+        Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_groundSensor.position, _hitBoxRadius);
+
+        foreach (Collider2D enemy in colliders2D)
+        {
+            if(enemy.gameObject.layer == 7)
+            {
+                Mimik enemyScript = enemy.GetComponent<Mimik>();
+                enemyScript.TakeDamage(_attackDamage);
+            }
+        }
+    }
+
     bool IsGrounded()
     {
         Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_groundSensor.position, _sensorSize);
@@ -80,5 +121,11 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_groundSensor.position, _sensorSize);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(_attackHitBox.position, _hitBoxRadius);
     }
+
+    
+
 }
