@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
     public void StartSoundtrack()
     {
         _audioSource.clip = _soundtrack;
-        _audioSource.play();
+        _audioSource.Play();
     }
 
     public void PauseSoundtrack()
