@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private int _attackDamage;
     [SerializeField]private Transform _attackHitBox;
     [SerializeField]private float _hitBoxRadius = 0.7f;
+
+    [SerializeField]private InputAction _pauseAction;
   
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +38,8 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _attackAction = InputSystem.actions["Attack"];
+
+        _pauseAction = InputSystem.actions["Pause"];
     }
 
     void Start()
@@ -46,6 +50,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //Poner arriba la opcion de Pausa para no ejecutar todo el codigo de abajo.
+        if(_pauseAction.WasPressedThisFrame())
+        {
+            GameManager.Instance.Pause();
+        }
+
+        if(GameManager.Instance.IsPaused())
+        {
+            return;
+        }
+
+        //Si el juego esta en pausa todo lo de abajo no se va a ejecutar.
+
+
         _moveInput = _moveAction.ReadValue<Vector2>();
 
         if(_moveInput.x < 0)
@@ -53,6 +72,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
             _animator.SetBool("IsRunning", true);
         }
+        
         else if(_moveInput.x > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -125,7 +145,4 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(_attackHitBox.position, _hitBoxRadius);
     }
-
-    
-
 }
