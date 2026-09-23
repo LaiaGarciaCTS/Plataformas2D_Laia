@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]private int coins;
     private bool _isPaused = false;
 
+    [SerializeField]private int health;
+
     void Awake()
     {
         if(Instance!= null && Instance != this)
@@ -23,7 +25,7 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.StartSoundtrack();
     }
 
-        public void AddCoin()
+    public void AddCoin()
     {
         coins += 1;
     }
@@ -47,5 +49,10 @@ public class GameManager : MonoBehaviour
     public bool IsPaused()
     {
         return _isPaused;
+    }
+
+    public void AddHealth()
+    {
+        health += 20;
     }
 }

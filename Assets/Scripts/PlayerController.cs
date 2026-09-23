@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]private int _maxHealth = 100;
     [SerializeField]public float _movementSpeed = 4.5f;
     [SerializeField]private float _jumpHeight = 2;
 
@@ -24,8 +23,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float _hitBoxRadius = 0.7f;
 
     [SerializeField]private InputAction _pauseAction;
-  
+
+    private AudioSource _playerAudioSource;
+
+    [SerializeField]private AudioClip _jumpSound;
+    [SerializeField]private AudioClip _attackSound;
+
+    [SerializeField]private int _maxHealth = 100;
+    [SerializeField]private int _actualHealth;
     
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -40,11 +47,13 @@ public class PlayerController : MonoBehaviour
         _attackAction = InputSystem.actions["Attack"];
 
         _pauseAction = InputSystem.actions["Pause"];
+
+        _playerAudioSource = GetComponent<AudioSource>();
     }
 
     void Start()
     {
-        
+        //_actualHealth = _maxHealth;
     }
 
     // Update is called once per frame
@@ -72,7 +81,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
             _animator.SetBool("IsRunning", true);
         }
-        
+
         else if(_moveInput.x > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -105,11 +114,15 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         _rigidbody2D.AddForce(Vector2.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
+
+        PlaySFX(_jumpSound);
     }
     
     void Attack()
     {
         _animator.SetTrigger("IsAttack");
+
+        PlaySFX(_attackSound);
 
         Collider2D[] colliders2D = Physics2D.OverlapCircleAll(_groundSensor.position, _hitBoxRadius);
 
@@ -144,5 +157,10 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(_attackHitBox.position, _hitBoxRadius);
+    }
+
+    void PlaySFX(AudioClip clip)
+    {
+        _playerAudioSource.PlayOneShot(clip);
     }
 }
