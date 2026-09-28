@@ -1,16 +1,18 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    /*
+    para poner manualmente el nombre del nivel en el inspector, mas rapido para cunado haya mas de 1 nivel.
+    public vois ChangeScene(string sceneName)
     {
-        
+        SceneManagement.LoadScene(sceneName)
     }
-
-    // Update is called once per frame
-    void Update()
+    */
+    public void ChangeScene()
     {
-        
+        SceneManager.LoadScene("SampleScene");
     }
+    
 }

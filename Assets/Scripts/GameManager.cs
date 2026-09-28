@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.StartSoundtrack();
             Time.timeScale = 0;
         }
+
+        CanvasManager.Instance.ChangeCanvasStatus();
     }
 
     public bool IsPaused()
@@ -51,8 +53,5 @@ public class GameManager : MonoBehaviour
         return _isPaused;
     }
 
-    public void AddHealth()
-    {
-        health += 20;
-    }
+
 }

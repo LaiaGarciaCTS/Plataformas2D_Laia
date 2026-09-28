@@ -70,8 +70,9 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
         //Si el juego esta en pausa todo lo de abajo no se va a ejecutar.
+
+        
 
 
         _moveInput = _moveAction.ReadValue<Vector2>();
