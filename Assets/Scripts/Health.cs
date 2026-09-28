@@ -9,8 +9,7 @@ public class Health : MonoBehaviour
     private CircleCollider2D _collider;
     private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]private int _maxHealth = 100;
-    [SerializeField]private int _actualHealth;
+    [SerializeField]private int _healAmaount = 10;
 
 
     void Awake()
@@ -40,7 +39,9 @@ public class Health : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.AddHealth();
+            PlayerController _playerScript = collision.GetComponent<PlayerController>();
+            _playerScript.AddHealth(_healAmaount);
+
             PlaySFX();
             _spriteRenderer.enabled = false;
             _collider.enabled = false;

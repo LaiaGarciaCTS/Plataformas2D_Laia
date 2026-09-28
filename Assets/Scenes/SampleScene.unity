@@ -487,7 +487,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0020752, y: -0.9599961, z: -10}
+  m_LocalPosition: {x: -0.98818207, y: -0.9599961, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1687,7 +1687,7 @@ Transform:
   m_GameObject: {fileID: 1689418755}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.49, y: -1.72, z: 0}
+  m_LocalPosition: {x: -4.54, y: -1.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1820,7 +1820,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1838,6 +1838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9636e73b228c4a45a3f1dfc031e4798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
+  _healthAudio: {fileID: 8300000, guid: b05b76ae5226cd1408c2cd64a40e627b, type: 3}
+  _healAmaount: 10
 --- !u!1 &1928859762
 GameObject:
   m_ObjectHideFlags: 0

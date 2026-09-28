@@ -163,4 +163,14 @@ public class PlayerController : MonoBehaviour
     {
         _playerAudioSource.PlayOneShot(clip);
     }
+
+    public void AddHealth(int _healAmaount)
+    {
+        _actualHealth += _healAmaount;
+
+        if(_actualHealth > _maxHealth)
+        {
+            _actualHealth = _maxHealth;
+        }
+    }
 }
