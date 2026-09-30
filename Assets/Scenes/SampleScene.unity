@@ -841,7 +841,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2903519, y: -0.9599961, z: -10}
+  m_LocalPosition: {x: -0.98818207, y: -0.9599961, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2039,7 +2039,7 @@ GameObject:
   - component: {fileID: 1586857065}
   - component: {fileID: 1586857064}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Resume (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2108,7 +2108,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1586857065}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2000638899}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1586857065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2455,7 +2467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 288}
+  m_AnchoredPosition: {x: 0, y: 309}
   m_SizeDelta: {x: 237.7112, y: 59.7829}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715125594
@@ -2530,7 +2542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.9406}
+  m_AnchoredPosition: {x: 0, y: 0.94060135}
   m_SizeDelta: {x: 0, y: -1.8812}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1803526090
@@ -2566,7 +2578,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Return
+  m_Text: Resume
 --- !u!222 &1803526091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2683,7 +2695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f98cc5a5b1275242b639991ce17cf9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasManager
-  _pauseCanvas: {fileID: 756222344}
+  pauseCanvas: {fileID: 756222344}
+  resumeButton: {fileID: 1586857064}
+  gameOverCanvas: {fileID: 0}
+  retryButton: {fileID: 0}
 --- !u!4 &1926075070
 Transform:
   m_ObjectHideFlags: 0
@@ -2814,7 +2829,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -141.73553}
+  m_AnchoredPosition: {x: 0, y: -97}
   m_SizeDelta: {x: 100, y: 127.7583}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1978846735
