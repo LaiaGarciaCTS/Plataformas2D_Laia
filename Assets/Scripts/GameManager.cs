@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private int coins;
     private bool _isPaused = false;
 
-    [SerializeField]private int health;
+    [SerializeField]private int star;
 
     void Awake()
     {
@@ -28,6 +28,11 @@ public class GameManager : MonoBehaviour
     public void AddCoin()
     {
         coins += 1;
+    }
+
+    public void AddStar()
+    {
+        star += 1;
     }
 
     public void Pause()

@@ -34,6 +34,5 @@ public class AudioManager : MonoBehaviour
     {
         _audioSource.Pause();
     }
-
 }
 
