@@ -30,6 +30,8 @@ public class SceneLoader : MonoBehaviour
         {
             Instance = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -38,7 +40,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }*/
     
-    public void ChageScene(string sceneName)
+    public void ChangeScene(string sceneName)
     {
         StartCoroutine(LoadNewScene(sceneName));
     }
