@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
 
     private InputAction _attackAction;
-    [SerializeField]private int _attackDamage;
+    [SerializeField]private int _attackDamage = 2;
     [SerializeField]private Transform _attackHitBox;
     [SerializeField]private float _hitBoxRadius = 0.7f;
 
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private AudioClip _jumpSound;
     [SerializeField]private AudioClip _attackSound;
 
-    [SerializeField]private int _maxHealth = 100;
+    [SerializeField]private int _maxHealth = 10;
     [SerializeField]private int _actualHealth;
     
 
@@ -73,8 +73,6 @@ public class PlayerController : MonoBehaviour
         //Si el juego esta en pausa todo lo de abajo no se va a ejecutar.
 
         
-
-
         _moveInput = _moveAction.ReadValue<Vector2>();
 
         if(_moveInput.x < 0)
@@ -173,5 +171,20 @@ public class PlayerController : MonoBehaviour
         {
             _actualHealth = _maxHealth;
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _actualHealth -= damage;
+        
+        if(_actualHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
