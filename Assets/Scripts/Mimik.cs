@@ -1,9 +1,24 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Mimik : MonoBehaviour
 {
-    [SerializeField]private int _maxHealth = 20;
-    private int _actualHealth;
+    [SerializeField]private int _maxHealth = 4;
+    [SerializeField]private int _actualHealth;
+
+    private Animator _animator;
+    private int _attackEnemy = 2;
+
+    void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
+
+    void Attack()
+    {
+        _animator.SetTrigger("IsAttacking");
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,5 +46,16 @@ public class Mimik : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+    }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController _playerScript = collision.gameObject.GetComponent<PlayerController>();
+            _playerScript.TakeDamage(_attackEnemy);
+            Attack();
+        }
     }
 }
