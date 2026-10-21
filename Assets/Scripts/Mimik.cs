@@ -9,15 +9,24 @@ public class Mimik : MonoBehaviour
     private Animator _animator;
     private int _attackEnemy = 2;
 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip _attackSound;
+
+
     void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
-
     void Attack()
     {
         _animator.SetTrigger("IsAttacking");
+
+
+        if (_audioSource != null && _attackSound != null)
+        {
+            _audioSource.PlayOneShot(_attackSound);
+        }
     }
 
 

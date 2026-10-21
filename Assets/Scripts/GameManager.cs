@@ -51,10 +51,20 @@ public class GameManager : MonoBehaviour
         monedaText.text = coins.ToString();
     }
 
+    
     public void AddStar()
     {
-        star += 1;
+        star++;
+        starCount = star;
+
         estrellaText.text = star.ToString();
+
+        Debug.Log("Estrellas recogidas: " + starCount);
+    }
+
+    public int GetStarCount()
+    {
+        return star;
     }
 
     public void AddHeart()

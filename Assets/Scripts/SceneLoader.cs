@@ -47,6 +47,26 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadNewScene(string sceneName)
     {
+    Debug.Log("Cargando escena de destino: " + sceneName);
+
+    yield return null;
+    _loadingCanvas.SetActive(true);
+
+    AsyncOperation asyncLoad =
+        SceneManager.LoadSceneAsync(sceneName);
+
+    if (asyncLoad == null)
+    {
+        Debug.LogError(
+            "No se pudo iniciar la carga de: " + sceneName
+        );
+        yield break;
+    }
+    }
+
+    /* Conserva aquí el resto de tu método actual.
+    
+    {
         yield return null;
         _loadingCanvas.SetActive(true);
 
@@ -74,5 +94,5 @@ public class SceneLoader : MonoBehaviour
 
         Time.timeScale = 1;
         _loadingCanvas.SetActive(false);
-    }
+    }*/
 }

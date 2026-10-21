@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField]private AudioClip _damageSound;
+    [SerializeField] private AudioClip _deathSound;
+
+    private bool _isDead = false;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,7 +65,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Evitar que el personaje siga moviendose
+        if (_isDead)
+            return;
+        
         //Poner arriba la opcion de Pausa para no ejecutar todo el codigo de abajo.
         if(_pauseAction.WasPressedThisFrame())
         {
@@ -110,6 +116,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Evitar que el personaje siga moviendose
+        if (_isDead)
+            return;
+        
         _rigidbody2D.linearVelocity = new Vector2(_moveInput.x * _movementSpeed, _rigidbody2D.linearVelocity.y);
     }
 
@@ -178,22 +188,74 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (_isDead)
+            return;
+
         _actualHealth -= damage;
+        _actualHealth = Mathf.Max(0, _actualHealth);
+
+        if (_actualHealth <= 0)
+        {
+            Die();
+            return;
+        }
 
         PlaySFX(_damageSound);
 
-        //GameManager.Instance._playerHealth = _actualHealth;
-        Debug.Log((float)damage / (float)_maxHealth);
         GameManager.Instance.StartCoroutine(GameManager.Instance.ReduceHealthBar((float)damage / (float)_maxHealth));
-        
-        if(_actualHealth <= 0)
+    }
+
+    void Die()
+    {
+        if (_isDead)
+            return;
+
+        _isDead = true;
+
+        // Detener el movimiento del personaje.
+        _moveInput = Vector2.zero;
+        _rigidbody2D.linearVelocity = Vector2.zero;
+        _rigidbody2D.simulated = false;
+
+        // Reproducir el sonido de muerte.
+        if (_deathSound != null)
+        {
+            _playerAudioSource.PlayOneShot(_deathSound);
+            StartCoroutine(LoadGameOverAfterDeathSound());
+        }
+        else
+        {
+            // Si no hay sonido asignado, cambiar de escena directamente.
+            SceneLoader.Instance.ChangeScene("GameOver");
+        }
+    }
+
+    System.Collections.IEnumerator LoadGameOverAfterDeathSound()
+    {
+        yield return new WaitForSecondsRealtime(_deathSound.length);
+
+        SceneLoader.Instance.ChangeScene("GameOver");
+    }
+
+    
+    void LateUpdate()
+    {
+        if (_isDead)
+            return;
+
+        Camera cam = Camera.main;
+
+        if (cam == null)
+            return;
+
+        Vector3 viewportPosition =
+            cam.WorldToViewportPoint(transform.position);
+
+        // Si el jugador cae por debajo de la cámara, muere.
+        if (viewportPosition.y < -0.05f)
         {
             Die();
         }
     }
 
-    void Die()
-    {
-        Destroy(gameObject);
-    }
 }
