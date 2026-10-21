@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private GameObject _gameplayCanvas;
     [SerializeField]private Image _healthBar;
 
-    public float _playerHealth = 10;
+    //public float _playerHealth = 10;
 
 
     void Awake()

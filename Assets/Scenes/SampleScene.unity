@@ -3828,7 +3828,7 @@ MonoBehaviour:
   _attackSound: {fileID: 8300000, guid: dd38613a108291e4eaef47b2364144fc, type: 3}
   _maxHealth: 10
   _actualHealth: 10
-  _damageSound: {fileID: 0}
+  _damageSound: {fileID: 8300000, guid: dd38613a108291e4eaef47b2364144fc, type: 3}
 --- !u!95 &1316089321
 Animator:
   serializedVersion: 7
@@ -5251,10 +5251,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 33bf9ed11bd5a8946b62a8b0c0fa70f9, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -5819,7 +5819,6 @@ MonoBehaviour:
   heartCount: 0
   _gameplayCanvas: {fileID: 1993369088}
   _healthBar: {fileID: 1807016987}
-  _playerHealth: 10
 --- !u!4 &2000638900
 Transform:
   m_ObjectHideFlags: 0

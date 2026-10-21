@@ -182,8 +182,9 @@ public class PlayerController : MonoBehaviour
 
         PlaySFX(_damageSound);
 
-        GameManager.Instance._playerHealth = _actualHealth;
-        GameManager.Instance.StartCoroutine(GameManager.Instance.ReduceHealthBar(damage / _maxHealth));
+        //GameManager.Instance._playerHealth = _actualHealth;
+        Debug.Log((float)damage / (float)_maxHealth);
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ReduceHealthBar((float)damage / (float)_maxHealth));
         
         if(_actualHealth <= 0)
         {
