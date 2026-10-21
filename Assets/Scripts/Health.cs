@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-
     private AudioSource _healthAudioSource;
     [SerializeField]private AudioClip _healthAudio;
 
     private CircleCollider2D _collider;
     private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]private int _healAmaount = 10;
+    [SerializeField]private int _healthAmaount = 2;
 
 
     void Awake()
@@ -23,13 +22,12 @@ public class Health : MonoBehaviour
     {
         _healthAudioSource.PlayOneShot(_healthAudio);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -40,7 +38,9 @@ public class Health : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             PlayerController _playerScript = collision.GetComponent<PlayerController>();
-            _playerScript.AddHealth(_healAmaount);
+            _playerScript.AddHealth(_healthAmaount);
+
+            GameManager.Instance.AddHeart();
 
             PlaySFX();
             _spriteRenderer.enabled = false;

@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]private int _maxHealth = 10;
     [SerializeField]private int _actualHealth;
+
+
+    [SerializeField]private AudioClip _damageSound;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -176,6 +179,11 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _actualHealth -= damage;
+
+        PlaySFX(_damageSound);
+
+        GameManager.Instance._playerHealth = _actualHealth;
+        GameManager.Instance.StartCoroutine(GameManager.Instance.ReduceHealthBar(damage / _maxHealth));
         
         if(_actualHealth <= 0)
         {
