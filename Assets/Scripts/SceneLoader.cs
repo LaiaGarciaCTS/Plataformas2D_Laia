@@ -5,94 +5,88 @@ using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
-    /*
-    para poner manualmente el nombre del nivel en el inspector, mas rapido para cunado haya mas de 1 nivel.
-    public vois ChangeScene(string sceneName)
-    {
-        SceneManagement.LoadScene(sceneName)
-    }
-    */
-
     public static SceneLoader Instance;
 
-    [SerializeField]private GameObject _loadingCanvas;
-    [SerializeField]private Image _loadingBar;
+    [SerializeField] private GameObject _loadingCanvas;
+    [SerializeField] private Image _loadingBar;
 
+    private bool _isLoading = false;
 
     void Awake()
     {
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
 
-        else
-        {
-            Instance = this;
-        }
-
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
-
-    /*public void ChangeScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }*/
-    
     public void ChangeScene(string sceneName)
     {
+        if (_isLoading) return;
+
         StartCoroutine(LoadNewScene(sceneName));
     }
 
-    IEnumerator LoadNewScene(string sceneName)
-    {
-    Debug.Log("Cargando escena de destino: " + sceneName);
-
-    yield return null;
-    _loadingCanvas.SetActive(true);
-
-    AsyncOperation asyncLoad =
-        SceneManager.LoadSceneAsync(sceneName);
-
-    if (asyncLoad == null)
-    {
-        Debug.LogError(
-            "No se pudo iniciar la carga de: " + sceneName
-        );
-        yield break;
-    }
-    }
-
-    /* Conserva aquí el resto de tu método actual.
     
+    private IEnumerator LoadNewScene(string sceneName)
     {
-        yield return null;
+        _isLoading = true;
+
         _loadingCanvas.SetActive(true);
+        _loadingBar.fillAmount = 0f;
+
+        yield return null;
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        if (asyncLoad == null)
+        {
+            Debug.LogError("No se encuentra la escena: " + sceneName);
+            _loadingCanvas.SetActive(false);
+            _isLoading = false;
+            yield break;
+        }
+
         asyncLoad.allowSceneActivation = false;
 
-        float fakeLoadPercentage = 0;
+        float fakeLoadPercentage = 0f;
 
-        while(!asyncLoad.isDone)
+        // Llenar la barra falsa
+        while (fakeLoadPercentage < 1f)
         {
-            //_loadingBar.fillAmount = asyncLoad.progress;
-
-            fakeLoadPercentage += 0.01f;
-            Mathf.Clamp01(fakeLoadPercentage);
+            fakeLoadPercentage += Time.unscaledDeltaTime * 0.5f;
+            fakeLoadPercentage = Mathf.Clamp01(fakeLoadPercentage);
 
             _loadingBar.fillAmount = fakeLoadPercentage;
 
-            if(asyncLoad.progress >= 0.09f && fakeLoadPercentage >= 0.99f)
+            // Esperar a que la escena esté preparada y la barra llena
+            if (fakeLoadPercentage >= 1f && asyncLoad.progress >= 0.9f)
             {
-                asyncLoad.allowSceneActivation = true;
+                break;
             }
 
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return null;
         }
 
-        Time.timeScale = 1;
+        // Activar SampleScene
+        asyncLoad.allowSceneActivation = true;
+
+        // Esperar hasta que Unity termine de cargarla
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        // IMPORTANTE: ocultar el canvas persistente
         _loadingCanvas.SetActive(false);
-    }*/
+
+        Time.timeScale = 1f;
+        _isLoading = false;
+
+        Debug.Log("Escena activa: " + SceneManager.GetActiveScene().name);
+    }
 }

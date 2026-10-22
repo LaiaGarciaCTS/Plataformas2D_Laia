@@ -28,16 +28,17 @@ public class GameManager : MonoBehaviour
     //public float _playerHealth = 10;
 
 
+
     void Awake()
     {
-        if(Instance!= null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
