@@ -89,8 +89,8 @@ public class REPASO : MonoBehaviour
 
     //Código personaje:
     
-    using UnityEngine;
-    using UnityEngine.InputSystem;
+    //using UnityEngine;
+    //using UnityEngine.InputSystem;
 
     private Rigidbody _rBody;
 
@@ -105,7 +105,7 @@ public class REPASO : MonoBehaviour
 
     //Campo GroundSensor:
     [SerializeField]private transform _groundSensor;
-    [SerializeField]private float _sensorRadius = 0.5f
+    [SerializeField]private float _sensorRadius = 0.5f;
 
     //Campo Animator:
     private Animator _animator;
@@ -185,8 +185,7 @@ public class REPASO : MonoBehaviour
 
         return false;
     }
-
-    */
+    
 
 
     /* CREAR NUEVA ESCENA - GAME OVER:
