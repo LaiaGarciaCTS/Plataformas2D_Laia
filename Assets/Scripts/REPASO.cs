@@ -92,11 +92,14 @@ public class REPASO : MonoBehaviour
     //using UnityEngine;
     //using UnityEngine.InputSystem;
 
+    //Campo Rigidbody personaje
     private Rigidbody _rBody;
 
+    //Campo InputAction de salto y movimiento
     private InputAction _jumpAction;
     private InputAction _moveAction;
 
+    //Campo Vector2 para el movimiento
     private Vector2 _moveInput;
 
     //Campo velocidad y fuerza de salto:
@@ -227,7 +230,7 @@ public class REPASO : MonoBehaviour
 
     Añadir una estrella en la escena
 
-    Crear un canvas para ponder el contador de las monedas; poner un texto y una imagen
+    Crear un canvas para poner el contador de las monedas; poner un texto y una imagen
     En el Game Manager añadir el texto que hemos creado (_coinsText) para que se vea la suma de las monedas
 
     Script para que se destruyan los Game Managers duplicados y para que se sumen las monedas en el Game Manager
